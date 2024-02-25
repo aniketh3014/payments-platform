@@ -20,9 +20,9 @@ const signinObject = zod.object({
 })
 
 const updateObject = zod.object({
-    password: zod.string().optional().min(8),
-    firstName: zod.string().optional().max(30),
-    lastName: zod.string().optional().max(30)
+    password: zod.string().optional(),
+    firstName: zod.string().optional(),
+    lastName: zod.string().optional()
 })
 
 userRouter.post("/signup", async(req,res) => {
@@ -37,7 +37,7 @@ userRouter.post("/signup", async(req,res) => {
             messege: "Email already taken/Invalid inputs"
         })
     }
-    const alreayExists = await User.findOne({username: username});
+    const alreayExists = await User.findOne({ username: username });
     if (alreayExists) {
         return res.status(411).json({
             messege: "Email already taken"
@@ -102,6 +102,31 @@ userRouter.put("/", authMiddleware, async(req,res) => {
     await User.updateOne({_id: req.user_id}, req.body);
     res.status(200).json({
         messege: "User updated successfully"
+    })
+})
+
+userRouter.get("/bulk", async (req, res) => {
+    const filter = req.query.filter || "";
+
+    const users = await User.find({
+        $or: [{
+            firstName: {
+                "$regex": filter
+            }
+        }, {
+            lastName: {
+                "$regex": filter
+            }
+        }]
+    })
+
+    res.json({
+        user: users.map(user => ({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            _id: user._id
+        }))
     })
 })
 
