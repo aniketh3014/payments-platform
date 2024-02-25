@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import { MONGO_URL } from "./config.js"; 
 
-mongoose.connect("mongodb+srv://admin:mypassword@cluster0.mcnh5ju.mongodb.net/payments-app");
+mongoose.connect(MONGO_URL);
 
 const userSchema = mongoose.Schema({
     username: {

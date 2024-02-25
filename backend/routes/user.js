@@ -3,6 +3,7 @@ import zod from 'zod';
 import { User } from '../db.js';
 import { JWT_SECRET } from '../config.js';
 import jwt from 'jsonwebtoken';
+import { authMiddleware } from '../middlewares.js';
 
 const userRouter = express.Router();
 
@@ -16,6 +17,12 @@ const signupObject = zod.object({
 const signinObject = zod.object({
     username: zod.string().email(),
     password: zod.string().min(8)
+})
+
+const updateObject = zod.object({
+    password: zod.string().optional().min(8),
+    firstName: zod.string().optional().max(30),
+    lastName: zod.string().optional().max(30)
 })
 
 userRouter.post("/signup", async(req,res) => {
@@ -82,7 +89,20 @@ userRouter.post("/signin", async(req,res) => {
     res.status(411).json({
         messege: "Invalid username or password"
     })
+})
 
+userRouter.put("/", authMiddleware, async(req,res) => {
+    const success = updateObject.safeParse(req.body);
+    if (!success) {
+        return res.status(411).json({
+            messege: "Faild to update information"
+        })
+    }
+
+    await User.updateOne({_id: req.user_id}, req.body);
+    res.status(200).json({
+        messege: "User updated successfully"
+    })
 })
 
 export default userRouter; 
