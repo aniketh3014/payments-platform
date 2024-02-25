@@ -6,11 +6,16 @@ import jwt from 'jsonwebtoken';
 
 const userRouter = express.Router();
 
-const userObject = zod.object({
+const signupObject = zod.object({
     username: zod.string().email(),
     password: zod.string().min(8),
     firstName: zod.string().max(30),
     lastName: zod.string().max(30)
+})
+
+const signinObject = zod.object({
+    username: zod.string().email(),
+    password: zod.string().min(8)
 })
 
 userRouter.post("/signup", async(req,res) => {
@@ -19,7 +24,7 @@ userRouter.post("/signup", async(req,res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
 
-    const {success} = userObject.safeParse(req.body);
+    const {success} = signupObject.safeParse(req.body);
     if (!success) {
         return res.status(411).json({
             messege: "Email already taken/Invalid inputs"
@@ -46,10 +51,38 @@ userRouter.post("/signup", async(req,res) => {
         messege: "New user created successfully",
         token: token
     })
+});
+
+userRouter.post("/signin", async(req,res) => {
+
+    const username = req.body.username;
+    const password = req.body.password;
+    const success = signinObject.safeParse(req.body);
+
+    if (!success) {
+        return res.status(411).json({
+            messege: "Invalid inputs"
+        })
+    }
+
+    const user = await User.findOne({
+        username,
+        password
+    })
+
+    if (user) {
+        const user_id = user._id;
+        const token = jwt.sign({user_id}, JWT_SECRET);
+        res.json({
+            token: token
+        })
+        return;
+    }
+
+    res.status(411).json({
+        messege: "Invalid username or password"
+    })
+
 })
-
-
-
-
 
 export default userRouter; 
