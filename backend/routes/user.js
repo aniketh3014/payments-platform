@@ -1,7 +1,7 @@
 import express from 'express';
 import zod from 'zod';
-import { User } from '../db';
-import { JWT_SECRET } from '../config';
+import { User } from '../db.js';
+import { JWT_SECRET } from '../config.js';
 import jwt from 'jsonwebtoken';
 
 const userRouter = express.Router();
@@ -25,7 +25,7 @@ userRouter.post("/signup", async(req,res) => {
             messege: "Email already taken/Invalid inputs"
         })
     }
-    const alreayExists = User.findOne({username: username});
+    const alreayExists = await User.findOne({username: username});
     if (alreayExists) {
         return res.status(411).json({
             messege: "Email already taken"
