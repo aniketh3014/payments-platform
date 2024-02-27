@@ -26,6 +26,11 @@ const updateObject = zod.object({
     lastName: zod.string().optional()
 })
 
+
+userRouter.post("/verify", authMiddleware, async(req,res) => {
+    res.status(200).send('Token is valid');
+})
+
 userRouter.post("/signup", async(req,res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -112,7 +117,7 @@ userRouter.put("/", authMiddleware, async(req,res) => {
     })
 })
 
-userRouter.get("/bulk", async (req, res) => {
+userRouter.post("/bulk", authMiddleware, async (req, res) => {
     const filter = req.query.filter || "";
 
     const users = await User.find({
