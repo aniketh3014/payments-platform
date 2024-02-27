@@ -3,6 +3,7 @@ import Signup from "./Signup.jsx"
 import "../index.css";
 import Signin from "./Signin.jsx"
 import Dashboard from "./Dashboard.jsx"
+import SendMoney from "./SendMoney.jsx"
 import { Navigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -51,7 +52,7 @@ export default function AppRoute() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        {/* <Route path="/send" element={<SendMoney />} />  */}
+        <Route path="/send" element={<SendMoney />} /> 
       </Routes>
     );
   }

@@ -28,7 +28,13 @@ const updateObject = zod.object({
 
 
 userRouter.post("/verify", authMiddleware, async(req,res) => {
-    res.status(200).send('Token is valid');
+    const account = await Account.findOne({user_id: req.user_id});
+    const balance = account.balance;
+    console.log(balance);
+    res.status(200).json({
+        message: 'Token is valid',
+        balance
+    })
 })
 
 userRouter.post("/signup", async(req,res) => {
@@ -61,7 +67,7 @@ userRouter.post("/signup", async(req,res) => {
 
     await Account.create({
         user_id,
-        balance: 1 + Math.random() * 10000
+        balance: Math.floor(1 + Math.random() * 10000)
     })
 
     const token = jwt.sign({user_id}, JWT_SECRET);

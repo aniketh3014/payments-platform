@@ -29,24 +29,28 @@ accountRouter.post("/transfer", authMiddleware, async (req, res) => {
         session.startTransaction();
 
         const user_id = req.user_id;
-        const { transferTo, amount } = req.body;
+        const transferTo = req.body.transferTo;
+        const amount = req.body.amount;
 
         const sender = await Account.findOne({ user_id }).session(session);
 
         if (!sender || sender.balance < amount) {
             await session.abortTransaction();
+            alert("Insufficent balance");
             return res.status(400).json({
                 message: "Insufficent balance"
             })
         }
 
-        const toAccount = await Account.findOne({ user_id: transferTo }).session(session);
+        const toAccount = await Account.findOne({ user_id: "65dc15ddc1c86cccdce16197" }).session(session);
 
         if (!toAccount) {
             await session.abortTransaction();
+            alert("Account not found");
             return res.status(400).json({
                 message: "Account not found"
             })
+            
         }
 
         await Account.updateOne({ user_id }, { $inc: { balance: -amount } } ).session(session);
@@ -57,11 +61,13 @@ accountRouter.post("/transfer", authMiddleware, async (req, res) => {
         res.json({
             message: "Transfer successful"
         })
+        alert("Transfer successful");
 
-    } catch {
+    } catch (err) {
         await session.abortTransaction();
+        alert("Transaction failed");
         return res.status(400).json({
-            message: "Transaction failed"
+            message: "Transaction failed", err
         })
     }
     
