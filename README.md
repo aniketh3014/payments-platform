@@ -20,9 +20,9 @@ This is a payment app with a backend built with Node.js, Express, and MongoDB, a
 1. Clone the repository.
 2. Install backend dependencies with `npm install`.
 3. Navigate to the frontend directory and install dependencies with `npm install`.
-4. Start the backend server with `npm start`.
-5. In a separate terminal, start the frontend with `npm start`.
-6. The app will be available at `http://localhost:3000` (or whatever port your React app runs on).
+4. Start the backend server with `node index.js`.
+5. In a separate terminal, start the frontend with `npm run dev`.
+6. The app will be available at `http://localhost:5137/` (or whatever port your React app runs on).
 
 ## Future Improvements
 
