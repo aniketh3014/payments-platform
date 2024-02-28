@@ -37,7 +37,7 @@ function SendMoney() {
                             setAmount(Number(e.target.value));
                         }}
                         type="number"
-                        className=" mt-2 flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm"
+                        className="text-black mt-2 flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm"
                         id="amount"
                         placeholder="Enter amount"
                     />
