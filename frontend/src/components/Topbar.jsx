@@ -22,16 +22,16 @@ function Topbar() {
         });
     }, []);
 
-    return <div className="shadow h-14 flex justify-between bg-inherit">
-    <div className="flex flex-col justify-center h-full ml-5">
+    return <div className="shadow h-14 flex justify-between">
+    <div className="flex flex-col justify-center h-full ml-5 font-mono">
         PaymentsWeb
     </div>
     <div className="flex">
-        <div className="flex flex-col justify-center h-full mr-5">
+        <div className="flex flex-col justify-center h-full mr-4 font-sans">
             Hello, {Name}
         </div>
-        <div className="rounded-full h-12 w-12 bg-blue-200 flex justify-center mt-1 mr-3">
-            <div className="flex flex-col justify-center h-full text-xl">
+        <div className="rounded-full h-12 w-12 bg-blue-300 flex justify-center mt-1 mr-3">
+            <div className="flex flex-col justify-center h-full text-2xl font-sans">
                 {Name[0]}
             </div>
         </div>

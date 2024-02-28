@@ -23,14 +23,17 @@ function Balance() {
     });
   }, []);
 
-    return <div className="flex shadow-sm w-80 rounded-lg bg-gray-100 mt-4">
-        <div className="font-bold px-4 py-6 text-xl">
-            Your balance: 
+  return <div className="px-4"> 
+          <div className="flex shadow-sm w-80 rounded-lg bg-gray-500 mt-10 text-white">
+            <div className="font-bold px-4 py-6 text-xl">
+              Your balance: 
+            </div>
+            <div className="font-bold mt-6 text-lg">
+                ₹ {balance}
+            </div>
         </div>
-        <div className="font-semibold mt-7">
-            ₹ {balance}
-        </div>
-    </div>
+  </div>
+
 }
 
 export default Balance;
