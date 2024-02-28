@@ -1,5 +1,5 @@
 import { json, useSearchParams } from 'react-router-dom';
-import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 function SendMoney() {
@@ -8,6 +8,7 @@ function SendMoney() {
     console.log(id);
     const name = searchParams.get("name");
     const [amount, setAmount] = useState(0);
+    const navigate = useNavigate();
 
     return <div class="flex justify-center h-screen bg-gray-100">
         <div className="h-full flex flex-col justify-center">
@@ -43,18 +44,23 @@ function SendMoney() {
                     />
                     </div>
                     <button onClick={async () => {
-                        const response = await axios.post("http://localhost:3000/api/v1/account/transfer", {
-                            amount: amount,
-                            transferTo: id
-                        }, {
+                        const response = await fetch("http://localhost:3000/api/v1/account/transfer", {
+                            method: "POST",
                             headers: {
-                                authorization: `Bearer ${localStorage.getItem('authToken')}`
-                            }
+                                authorization: `Bearer ${localStorage.getItem('authToken')}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                amount: amount,
+                                transferTo: id
+                            })
                         });
-
-                        const data = response.data;
-                        console.log(data);
-
+                        if (response.status === 200) {
+                            alert("Transaction successful")
+                        } else {
+                            alert("Transaction failed")
+                        }
+                        navigate("/dashboard");
                         }} class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
                         Initiate Transfer
                     </button>
