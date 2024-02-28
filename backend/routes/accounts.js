@@ -1,25 +1,27 @@
 import express from 'express';
 import { authMiddleware } from '../middlewares.js';
-import { Account } from '../db.js';
+import { Account, User } from '../db.js';
 import mongoose from 'mongoose';
 
 const accountRouter = express.Router();
 
-accountRouter.get("/balance", authMiddleware, async (req, res) => {
-    const user_id = req.user_id;
+// accountRouter.get("/balance", authMiddleware, async (req, res) => {
+//     const user_id = req.user_id;
 
-    const userAccount = await Account.findOne({ user_id });
+//     const userAccount = await Account.findOne({ user_id });
+//     const user = await User.findOne({ user_id });
 
-    if (!userAccount) {
-        return res.status(404).json({
-            message: "Account not found"
-        })
-    }
+//     if (!userAccount || !user) {
+//         return res.status(404).json({
+//             message: "Account not found"
+//         })
+//     }
 
-    res.json({
-        balance: userAccount.balance
-    })
-});
+//     res.json({
+//         balance: userAccount.balance,
+//         firstName: user.firstName,
+//     })
+// });
 
 accountRouter.post("/transfer", authMiddleware, async (req, res) => {
     const session = await mongoose.startSession();
@@ -30,9 +32,9 @@ accountRouter.post("/transfer", authMiddleware, async (req, res) => {
 
         const user_id = req.user_id
         const transferTo = req.body.transferTo
-        console.log(transferTo)
+        // console.log(transferTo)
         const amount = req.body.amount
-        console.log(amount)
+        // console.log(amount)
 
         const sender = await Account.findOne({ user_id }).session(session);
 

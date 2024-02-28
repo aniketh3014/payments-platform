@@ -49,8 +49,8 @@ export default function AppRoute() {
     return (
       <Routes>
         <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace state={{ from: location }} /> : <Signup />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={isAuthenticated ? <Navigate to="/dashboard" replace state={{ from: location }} /> : <Signup />} />
+        <Route path="/signin" element={isAuthenticated ? <Navigate to="/dashboard" replace state={{ from: location }} /> : <Signin />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/send" element={<SendMoney />} /> 
       </Routes>

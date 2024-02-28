@@ -1,10 +1,9 @@
 import express from 'express';
 import zod from 'zod';
-import { User } from '../db.js';
+import { User, Account } from '../db.js';
 import { JWT_SECRET } from '../config.js';
 import jwt from 'jsonwebtoken';
-import { authMiddleware } from '../middlewares.js';
-import { Account } from '../db.js';  
+import { authMiddleware } from '../middlewares.js'; 
 
 const userRouter = express.Router();
 
@@ -29,11 +28,14 @@ const updateObject = zod.object({
 
 userRouter.post("/verify", authMiddleware, async(req,res) => {
     const account = await Account.findOne({user_id: req.user_id});
+    const user = await User.findOne({_id: req.user_id});
     const balance = account.balance;
-    console.log(balance);
+    const firstName = user.firstName;
+    // console.log(balance);
     res.status(200).json({
         message: 'Token is valid',
-        balance
+        balance,
+        firstName
     })
 })
 
