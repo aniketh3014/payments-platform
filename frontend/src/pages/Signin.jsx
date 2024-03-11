@@ -29,7 +29,7 @@ function Signin() {
                 setPassword(e.target.value)
             }}/>
             <Button text={"Sign in to your account"} onClick={async() => {
-                const response = await axios.post("http://ec2-13-127-180-46.ap-south-1.compute.amazonaws.com:3000/api/v1/user/signin", {
+                const response = await axios.post("https://be1.aniketghosh.ninja/api/v1/user/signin", {
                     username,
                     password
                 })

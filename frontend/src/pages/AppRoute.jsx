@@ -26,7 +26,7 @@ export default function AppRoute() {
         headers: { Authorization: `Bearer ${jwt}` }
       };
   
-      fetch('http://ec2-13-127-180-46.ap-south-1.compute.amazonaws.com:3000/api/v1/user/verify', {
+      fetch('https://be1.aniketghosh.ninja/api/v1/user/verify', {
         method: 'POST',
         headers: config.headers,
       })

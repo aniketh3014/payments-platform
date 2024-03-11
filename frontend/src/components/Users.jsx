@@ -11,7 +11,7 @@ function Users() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://ec2-13-127-180-46.ap-south-1.compute.amazonaws.com:3000/api/v1/user/bulk?filter=${filter}`, {
+                const response = await fetch(`https://be1.aniketghosh.ninja/api/v1/user/bulk?filter=${filter}`, {
                     method: 'POST',
                     headers: {
                         authorization: `Bearer ${localStorage.getItem('authToken')}`
@@ -34,7 +34,7 @@ function Users() {
         <div className="my-5">
             <input onChange={(e) => {
                 setFilter(e.target.value)
-            }} type="text" placeholder="Search users..." className="w-80 px-2 py-1 border rounded-lg bg-gray-50 border-slate-200 opacity-80"></input>
+            }} type="text" placeholder="Search users..." className="w-80 px-2 py-1 border rounded-lg bg-gray-50 border-slate-200 opacity-80 text-black"></input>
         </div>
         <div>
             {users.map(user => <User user={user} />)}
