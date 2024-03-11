@@ -37,7 +37,7 @@ function Users() {
             }} type="text" placeholder="Search users..." className="w-80 px-2 py-1 border rounded-lg bg-gray-50 border-slate-200 opacity-80 text-black"></input>
         </div>
         <div>
-            {users.map(user => <User user={user} />)}
+            {users.map(user => <User user={user} key={user._id}/>)}
         </div>
         
     </div>
