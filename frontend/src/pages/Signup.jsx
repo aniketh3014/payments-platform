@@ -40,7 +40,7 @@ function Signup() {
             <Input label={"Password"} innerText={"password"}  onChange={e => {
                 setPassword(e.target.value)}}/>
             <Button text={"Create account"} onClick={async() => {
-                const response = await axios.post("http://ec2-13-127-180-46.ap-south-1.compute.amazonaws.com/api/v1/user/signup", {
+                const response = await axios.post("http://ec2-13-127-180-46.ap-south-1.compute.amazonaws.com:3000/api/v1/user/signup", {
                     username,
                     firstName,
                     lastName,

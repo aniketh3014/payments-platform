@@ -11,7 +11,7 @@ function Users() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://ec2-13-127-180-46.ap-south-1.compute.amazonaws.com/api/v1/user/bulk?filter=${filter}`, {
+                const response = await fetch(`http://ec2-13-127-180-46.ap-south-1.compute.amazonaws.com:3000/api/v1/user/bulk?filter=${filter}`, {
                     method: 'POST',
                     headers: {
                         authorization: `Bearer ${localStorage.getItem('authToken')}`
