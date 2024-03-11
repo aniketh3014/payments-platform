@@ -5,7 +5,7 @@ import { useState } from 'react';
 function SendMoney() {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
-    console.log(id);
+    // console.log(id);
     const name = searchParams.get("name");
     const [amount, setAmount] = useState(0);
     const navigate = useNavigate();
@@ -43,7 +43,7 @@ function SendMoney() {
                     />
                     </div>
                     <button onClick={async () => {
-                        const response = await fetch("http://localhost:3000/api/v1/account/transfer", {
+                        const response = await fetch("http://ec2-13-127-180-46.ap-south-1.compute.amazonaws.com/api/v1/account/transfer", {
                             method: "POST",
                             headers: {
                                 authorization: `Bearer ${localStorage.getItem('authToken')}`,
